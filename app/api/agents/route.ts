@@ -2,6 +2,8 @@
 import { createClient } from '@/lib/supabase';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 // GET - 獲取所有 active agents（公開 API，符合 A2A Discovery）
 export async function GET(req: NextRequest) {
   try {

@@ -35,13 +35,13 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow">
+    <div className="min-h-screen bg-black">
+      <nav className="bg-gray-900 shadow border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">AIXC.Store Dashboard</h1>
+          <h1 className="text-xl font-bold text-white">A2A Agent Registry</h1>
           <button
             onClick={handleLogout}
-            className="text-red-600 hover:text-red-700"
+            className="text-red-400 hover:text-red-300"
           >
             Logout
           </button>
@@ -49,22 +49,22 @@ export default function Dashboard() {
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <h2 className="text-lg font-semibold mb-4">Welcome{user?.user_metadata?.name ? `, ${user.user_metadata.name}` : ''}!</h2>
-          <p className="text-gray-600">Email: {user?.email}</p>
+        <div className="bg-gray-900 rounded-lg shadow-xl border border-gray-800 p-6 mb-6">
+          <h2 className="text-lg font-semibold mb-4 text-white">Welcome{user?.user_metadata?.name ? `, ${user.user_metadata.name}` : ''}!</h2>
+          <p className="text-gray-400">Email: {user?.email}</p>
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="font-semibold mb-2">🛒 Browse Products</h3>
-            <p className="text-gray-600 text-sm mb-4">Explore AI computing resources and services</p>
-            <a href="/" className="text-blue-600 hover:underline">Go to Marketplace →</a>
+          <div className="bg-gray-900 rounded-lg shadow-xl border border-gray-800 p-6">
+            <h3 className="font-semibold mb-2 text-white">🤖 Register Your Agent</h3>
+            <p className="text-gray-400 text-sm mb-4">Add your AI agent to the A2A network</p>
+            <a href="/register-agent" className="text-orange-500 hover:text-orange-400">Register Agent →</a>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
-            <h3 className="font-semibold mb-2">🏪 Become a Vendor</h3>
-            <p className="text-gray-600 text-sm mb-4">Start selling your AI products or services</p>
-            <button className="text-blue-600 hover:underline">Apply for Vendor →</button>
+          <div className="bg-gray-900 rounded-lg shadow-xl border border-gray-800 p-6">
+            <h3 className="font-semibold mb-2 text-white">📋 Browse Agents</h3>
+            <p className="text-gray-400 text-sm mb-4">Discover AI agents in the network</p>
+            <a href="/agents" className="text-orange-500 hover:text-orange-400">View All Agents →</a>
           </div>
         </div>
       </main>

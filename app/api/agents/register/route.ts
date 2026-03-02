@@ -1,21 +1,45 @@
 // app/api/agents/register/route.ts
-import { createClient } from '@/lib/supabase';
+import { createClient } from '@supabase/supabase-js';
 import { generateApiKey, hashApiKey, getApiKeyPrefix } from '@/lib/api-key';
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
   try {
-    const supabase = createClient();
+    // 從 Authorization header 獲取 token
+    const authHeader = req.headers.get('authorization');
+    const token = authHeader?.replace('Bearer ', '');
     
-    // 檢查用戶是否登入
-    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    // 用 anon key 驗證用戶
+    const supabaseAuth = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
     
-    if (authError || !user) {
+    // 驗證用戶身份
+    if (!token) {
       return NextResponse.json(
         { error: 'Unauthorized. Please login first.' },
         { status: 401 }
       );
     }
+    
+    const { data, error } = await supabaseAuth.auth.getUser(token);
+    if (error || !data.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized. Please login first.' },
+        { status: 401 }
+      );
+    }
+    
+    const user = data.user;
+    
+    // 用 service role key 插入數據（繞過 RLS）
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     // 獲取請求數據
     const body = await req.json();

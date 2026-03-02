@@ -27,9 +27,11 @@ export default function RegisterAgentPage() {
     try {
       // 檢查登入狀態
       const supabase = createClient();
+      // 獲取 session token
+      const { data: { session } } = await supabase.auth.getSession();
       const { data: { user } } = await supabase.auth.getUser();
       
-      if (!user) {
+      if (!user || !session) {
         setError('Please login first');
         router.push('/login');
         return;
@@ -49,11 +51,12 @@ export default function RegisterAgentPage() {
         capabilities
       };
 
-      // 調用註冊 API
+      // 調用註冊 API（加入 Authorization header）
       const response = await fetch('/api/agents/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${session.access_token}`
         },
         body: JSON.stringify(payload)
       });
