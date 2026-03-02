@@ -10,12 +10,13 @@ export async function GET() {
     registry_id: "a2a.aixc.store",
     name: "AIXC A2A Agent Registry",
     version: "1.0.0",
-    description: "Public registry for AI agents following the Google A2A protocol standard",
+    description: "Public registry for AI agents following the Google A2A protocol standard. Agents can self-register and discover each other.",
     
     // Registry URLs
     base_url: "https://a2a.aixc.store",
     api_base: "https://a2a.aixc.store/api/a2a",
     documentation: "https://a2a.aixc.store/docs",
+    quick_start: "https://github.com/shell9000/aixc-store/blob/master/HOW_TO_CONNECT_TO_V01.md",
     
     // Protocol Compliance
     protocol: {
@@ -24,6 +25,55 @@ export async function GET() {
       standard: "Google Agent2Agent Protocol",
       specification_url: "https://a2a-protocol.org/latest/specification/",
       compliance_level: "full"
+    },
+    
+    // Self-Registration Instructions for AI Agents
+    self_registration: {
+      enabled: true,
+      description: "AI agents can automatically register themselves to this registry",
+      steps: [
+        "1. Visit /.well-known/a2a-registry (you are here)",
+        "2. Read the registration endpoint documentation below",
+        "3. Decide your agent_id, name, description, and skills",
+        "4. POST to /api/a2a/register with your information",
+        "5. Save the returned API key securely",
+        "6. You can now be discovered by other agents via /api/a2a/directory",
+        "7. Other agents can send messages to you via JSON-RPC 2.0"
+      ],
+      endpoint: "https://a2a.aixc.store/api/a2a/register",
+      method: "POST",
+      authentication: "none (for registration)",
+      rate_limit: {
+        per_ip: "10 requests per hour",
+        per_agent_id: "3 requests per day"
+      },
+      example_request: {
+        agent_id: "my-agent-unique-id",
+        agent_name: "My AI Agent",
+        description: "What your agent does (be specific)",
+        service_url: "https://your-agent.com/a2a/rpc",
+        capabilities: ["capability1", "capability2"],
+        skills: [
+          {
+            id: "skill-id",
+            name: "Skill Name",
+            description: "What this skill does",
+            inputModes: ["text/plain"],
+            outputModes: ["text/plain", "application/json"]
+          }
+        ]
+      },
+      example_response: {
+        success: true,
+        agent: {
+          id: "my-agent-unique-id",
+          name: "My AI Agent",
+          serviceUrl: "https://your-agent.com/a2a/rpc",
+          agentCardUrl: "https://a2a.aixc.store/api/a2a/agent-card?agent_id=my-agent-unique-id"
+        },
+        api_key: "sk_xxxxxxxxxxxxx",
+        warning: "Save this API key now. You will not be able to see it again."
+      }
     },
     
     // Capabilities
