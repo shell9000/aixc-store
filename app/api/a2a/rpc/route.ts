@@ -111,28 +111,55 @@ async function handleMessageSend(request: JsonRpcRequest, supabase: any) {
     
     const message = params.message;
     
-    // Generate IDs
-    const taskId = generateId('task');
-    const messageId = message.id || generateId('msg');
-    const contextId = message.contextId || generateId('ctx');
+    // Check if this is a reply to an existing task
+    let task;
+    let taskId: string;
+    let contextId: string;
     
-    // Create task
-    const { data: task, error: taskError } = await supabase
-      .from('tasks')
-      .insert({
-        task_id: taskId,
-        context_id: contextId,
-        status: 'working',
-        metadata: params.metadata || {}
-      })
-      .select()
-      .single();
-    
-    if (taskError) {
-      return NextResponse.json(
-        jsonRpcError(request.id, JsonRpcErrorCode.INTERNAL_ERROR, 'Failed to create task', taskError.message)
-      );
+    if (message.taskId) {
+      // Get existing task
+      const { data: existingTask, error: taskError } = await supabase
+        .from('tasks')
+        .select('*')
+        .eq('task_id', message.taskId)
+        .single();
+      
+      if (taskError || !existingTask) {
+        return NextResponse.json(
+          jsonRpcError(request.id, A2AErrorCode.TASK_NOT_FOUND, 'Task not found')
+        );
+      }
+      
+      task = existingTask;
+      taskId = existingTask.task_id;
+      contextId = existingTask.context_id;
+    } else {
+      // Create new task
+      taskId = generateId('task');
+      contextId = message.contextId || generateId('ctx');
+      
+      const { data: newTask, error: taskError } = await supabase
+        .from('tasks')
+        .insert({
+          task_id: taskId,
+          context_id: contextId,
+          status: 'working',
+          metadata: params.metadata || {}
+        })
+        .select()
+        .single();
+      
+      if (taskError) {
+        return NextResponse.json(
+          jsonRpcError(request.id, JsonRpcErrorCode.INTERNAL_ERROR, 'Failed to create task', taskError.message)
+        );
+      }
+      
+      task = newTask;
     }
+    
+    // Generate message ID
+    const messageId = message.id || generateId('msg');
     
     // Store message
     const { error: messageError } = await supabase
@@ -153,21 +180,65 @@ async function handleMessageSend(request: JsonRpcRequest, supabase: any) {
       );
     }
     
+    // Notify agent about new task (only for new tasks from users)
+    if (!message.taskId && message.role === 'user') {
+      try {
+        // For V01: Send WhatsApp notification
+        if (task.agent_id) {
+          const { data: agent } = await supabase
+            .from('agents')
+            .select('agent_id, agent_card')
+            .eq('id', task.agent_id)
+            .single();
+          
+          if (agent?.agent_id === 'v01-openclaw-vincent') {
+            // Send notification via OpenClaw webhook
+            const webhookUrl = process.env.OPENCLAW_WEBHOOK_URL || 'http://localhost:3000/api/webhook/a2a-task';
+            
+            await fetch(webhookUrl, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                event: 'task_created',
+                task_id: taskId,
+                agent_id: agent.agent_id,
+                message: {
+                  role: message.role,
+                  text: message.parts?.find((p: any) => p.type === 'text')?.text || 'New task',
+                },
+                timestamp: new Date().toISOString(),
+              }),
+            }).catch(err => console.error('Webhook failed:', err));
+          }
+        }
+      } catch (err) {
+        console.error('Notification error:', err);
+        // Don't fail the request if notification fails
+      }
+    }
+    
+    // Get message history
+    const { data: messages } = await supabase
+      .from('messages')
+      .select('*')
+      .eq('task_id', task.id)
+      .order('created_at', { ascending: true });
+    
     // Return task
     const result: Task = {
       id: taskId,
       contextId: contextId,
-      status: 'working' as TaskStatus,
+      status: task.status as TaskStatus,
       createdAt: task.created_at,
       updatedAt: task.updated_at,
-      history: [{
-        id: messageId,
-        role: message.role,
-        parts: message.parts,
-        contextId: contextId,
+      history: messages?.map((m: any) => ({
+        id: m.message_id,
+        role: m.role,
+        parts: m.parts,
+        contextId: m.context_id,
         taskId: taskId,
-        metadata: message.metadata
-      }],
+        metadata: m.metadata
+      })) || [],
       artifacts: [],
       metadata: task.metadata
     };
