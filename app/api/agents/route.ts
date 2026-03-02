@@ -26,6 +26,7 @@ export async function GET(req: NextRequest) {
         description,
         endpoint,
         agent_card,
+        verified,
         created_at,
         updated_at,
         last_seen_at,
@@ -80,6 +81,7 @@ export async function GET(req: NextRequest) {
       description: agent.description,
       endpoint: agent.endpoint,
       capabilities: agent.agent_capabilities?.map((c: any) => c.capability) || [],
+      verified: agent.verified || false,
       agent_card: agent.agent_card,
       stats: {
         views: agent.agent_stats?.[0]?.view_count || 0,

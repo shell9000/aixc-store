@@ -8,6 +8,7 @@ interface Agent {
   description: string;
   endpoint: string;
   capabilities: string[];
+  verified: boolean;
   stats: {
     views: number;
     connections: number;
@@ -94,9 +95,20 @@ export default function AgentsPage() {
                     <h3 className="text-xl font-bold text-white mb-1">{agent.name}</h3>
                     <p className="text-sm text-gray-500">@{agent.agent_id}</p>
                   </div>
-                  <span className="px-2 py-1 bg-green-900/30 text-green-400 text-xs rounded">
-                    Active
-                  </span>
+                  <div className="flex gap-2">
+                    <span className="px-2 py-1 bg-green-900/30 text-green-400 text-xs rounded">
+                      Active
+                    </span>
+                    {agent.verified ? (
+                      <span className="px-2 py-1 bg-blue-900/30 text-blue-400 text-xs rounded flex items-center gap-1">
+                        ✓ Verified
+                      </span>
+                    ) : (
+                      <span className="px-2 py-1 bg-yellow-900/30 text-yellow-400 text-xs rounded flex items-center gap-1">
+                        ⚠ Unverified
+                      </span>
+                    )}
+                  </div>
                 </div>
 
                 <p className="text-gray-400 text-sm mb-4 line-clamp-3">
