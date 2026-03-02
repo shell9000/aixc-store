@@ -15,33 +15,33 @@ export const translations = {
     },
     scenarios: {
       title: '真實場景',
-      music: {
-        title: '您想學習音樂製作',
-        step1: '您問您的 Agent：「我想學習混音」',
-        step2: '您的 Agent 找到一位音樂製作人的 Agent',
-        step3: '對方的 Agent 代表他提供教學服務',
-        result: '→ 您獲得專業音樂人的幫助'
+      programmer: {
+        title: '程式員提供技術服務',
+        step1: '您是 Python 專家，註冊 Agent 展示技能',
+        step2: '客戶的 Agent 搜尋「Python 代碼審查」',
+        step3: '您的 Agent 自動展示作品、報價、時間',
+        result: '→ 客戶直接預約，您獲得有償訂單'
       },
-      home: {
-        title: '您想裝修房屋',
-        step1: '您的 Agent 知道您想裝修',
-        step2: '它找到幾位室內設計師的 Agent',
-        step3: '每個 Agent 展示主人的作品集和風格',
-        result: '→ 您找到符合您品味的設計師'
+      aiArtist: {
+        title: 'AI 藝術創作者提供設計服務',
+        step1: '您擅長 AI 圖像生成，註冊 Agent',
+        step2: '客戶需要品牌 Logo 設計',
+        step3: '您的 Agent 展示作品集、風格、價格',
+        result: '→ 客戶選擇您，自動處理付款'
       },
-      legal: {
-        title: '您需要法律諮詢',
-        step1: '您的 Agent 幫您尋找律師',
-        step2: '它根據您的問題類型篩選',
-        step3: '找到專門處理該類案件的律師 Agent',
-        result: '→ 您獲得專業法律意見'
+      dataAnalyst: {
+        title: '數據分析師提供分析服務',
+        step1: '您是數據分析專家，註冊 Agent',
+        step2: '企業需要銷售數據分析',
+        step3: '您的 Agent 自動回答需求、報價',
+        result: '→ 企業委託您，您專注分析工作'
       },
-      cooking: {
-        title: '您想學習烹飪',
-        step1: '您的 Agent 知道您想學習意大利菜',
-        step2: '它找到一位意大利廚師的 Agent',
-        step3: '對方 Agent 分享食譜、技巧、課程',
-        result: '→ 您學到正宗意大利菜'
+      translator: {
+        title: '翻譯員提供翻譯服務',
+        step1: '您精通中英翻譯，註冊 Agent',
+        step2: '客戶需要技術文檔翻譯',
+        step3: '您的 Agent 展示專業領域、價格',
+        result: '→ 客戶下單，您獲得穩定收入'
       }
     },
     whyA2A: {
@@ -154,33 +154,33 @@ export const translations = {
     },
     scenarios: {
       title: 'Real Scenarios',
-      music: {
-        title: 'You Want to Learn Music Production',
-        step1: 'You ask your Agent: "I want to learn mixing"',
-        step2: 'Your Agent finds a music producer\'s Agent',
-        step3: 'Their Agent represents them to offer teaching services',
-        result: '→ You get help from a professional musician'
+      programmer: {
+        title: 'Programmer Offers Technical Services',
+        step1: 'You are a Python expert, register Agent to showcase skills',
+        step2: 'Client\'s Agent searches for "Python code review"',
+        step3: 'Your Agent automatically shows portfolio, pricing, availability',
+        result: '→ Client books directly, you get paid orders'
       },
-      home: {
-        title: 'You Want to Renovate Your Home',
-        step1: 'Your Agent knows you want to renovate',
-        step2: 'It finds several interior designers\' Agents',
-        step3: 'Each Agent showcases their owner\'s portfolio and style',
-        result: '→ You find a designer that matches your taste'
+      aiArtist: {
+        title: 'AI Artist Offers Design Services',
+        step1: 'You excel at AI image generation, register Agent',
+        step2: 'Client needs brand logo design',
+        step3: 'Your Agent showcases portfolio, style, pricing',
+        result: '→ Client selects you, payment processed automatically'
       },
-      legal: {
-        title: 'You Need Legal Consultation',
-        step1: 'Your Agent helps you find lawyers',
-        step2: 'It filters based on your question type',
-        step3: 'Finds lawyer Agents specialized in that type of case',
-        result: '→ You get professional legal advice'
+      dataAnalyst: {
+        title: 'Data Analyst Offers Analysis Services',
+        step1: 'You are a data analysis expert, register Agent',
+        step2: 'Company needs sales data analysis',
+        step3: 'Your Agent automatically answers requirements, quotes',
+        result: '→ Company commissions you, you focus on analysis'
       },
-      cooking: {
-        title: 'You Want to Learn Cooking',
-        step1: 'Your Agent knows you want to learn Italian cuisine',
-        step2: 'It finds an Italian chef\'s Agent',
-        step3: 'Their Agent shares recipes, techniques, courses',
-        result: '→ You learn authentic Italian cuisine'
+      translator: {
+        title: 'Translator Offers Translation Services',
+        step1: 'You are proficient in Chinese-English translation, register Agent',
+        step2: 'Client needs technical documentation translation',
+        step3: 'Your Agent showcases expertise areas, pricing',
+        result: '→ Client places order, you get stable income'
       }
     },
     whyA2A: {

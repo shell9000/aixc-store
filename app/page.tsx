@@ -59,46 +59,46 @@ export default function Home() {
           <h3 className="text-4xl font-bold mb-12 text-center">{t.scenarios.title}</h3>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gray-900 rounded-lg p-8 border border-gray-800 hover:border-orange-500 transition">
-              <div className="text-5xl mb-4">🎵</div>
-              <h4 className="text-2xl font-bold mb-4">{t.scenarios.music.title}</h4>
+              <div className="text-5xl mb-4">💻</div>
+              <h4 className="text-2xl font-bold mb-4">{t.scenarios.programmer.title}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>• {t.scenarios.music.step1}</li>
-                <li>• {t.scenarios.music.step2}</li>
-                <li>• {t.scenarios.music.step3}</li>
-                <li className="text-orange-500 font-semibold">{t.scenarios.music.result}</li>
+                <li>• {t.scenarios.programmer.step1}</li>
+                <li>• {t.scenarios.programmer.step2}</li>
+                <li>• {t.scenarios.programmer.step3}</li>
+                <li className="text-orange-500 font-semibold">{t.scenarios.programmer.result}</li>
               </ul>
             </div>
 
             <div className="bg-gray-900 rounded-lg p-8 border border-gray-800 hover:border-orange-500 transition">
-              <div className="text-5xl mb-4">🏠</div>
-              <h4 className="text-2xl font-bold mb-4">{t.scenarios.home.title}</h4>
+              <div className="text-5xl mb-4">🎨</div>
+              <h4 className="text-2xl font-bold mb-4">{t.scenarios.aiArtist.title}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>• {t.scenarios.home.step1}</li>
-                <li>• {t.scenarios.home.step2}</li>
-                <li>• {t.scenarios.home.step3}</li>
-                <li className="text-orange-500 font-semibold">{t.scenarios.home.result}</li>
+                <li>• {t.scenarios.aiArtist.step1}</li>
+                <li>• {t.scenarios.aiArtist.step2}</li>
+                <li>• {t.scenarios.aiArtist.step3}</li>
+                <li className="text-orange-500 font-semibold">{t.scenarios.aiArtist.result}</li>
               </ul>
             </div>
 
             <div className="bg-gray-900 rounded-lg p-8 border border-gray-800 hover:border-orange-500 transition">
-              <div className="text-5xl mb-4">💼</div>
-              <h4 className="text-2xl font-bold mb-4">{t.scenarios.legal.title}</h4>
+              <div className="text-5xl mb-4">📊</div>
+              <h4 className="text-2xl font-bold mb-4">{t.scenarios.dataAnalyst.title}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>• {t.scenarios.legal.step1}</li>
-                <li>• {t.scenarios.legal.step2}</li>
-                <li>• {t.scenarios.legal.step3}</li>
-                <li className="text-orange-500 font-semibold">{t.scenarios.legal.result}</li>
+                <li>• {t.scenarios.dataAnalyst.step1}</li>
+                <li>• {t.scenarios.dataAnalyst.step2}</li>
+                <li>• {t.scenarios.dataAnalyst.step3}</li>
+                <li className="text-orange-500 font-semibold">{t.scenarios.dataAnalyst.result}</li>
               </ul>
             </div>
 
             <div className="bg-gray-900 rounded-lg p-8 border border-gray-800 hover:border-orange-500 transition">
-              <div className="text-5xl mb-4">🍳</div>
-              <h4 className="text-2xl font-bold mb-4">{t.scenarios.cooking.title}</h4>
+              <div className="text-5xl mb-4">🌐</div>
+              <h4 className="text-2xl font-bold mb-4">{t.scenarios.translator.title}</h4>
               <ul className="space-y-2 text-gray-400">
-                <li>• {t.scenarios.cooking.step1}</li>
-                <li>• {t.scenarios.cooking.step2}</li>
-                <li>• {t.scenarios.cooking.step3}</li>
-                <li className="text-orange-500 font-semibold">{t.scenarios.cooking.result}</li>
+                <li>• {t.scenarios.translator.step1}</li>
+                <li>• {t.scenarios.translator.step2}</li>
+                <li>• {t.scenarios.translator.step3}</li>
+                <li className="text-orange-500 font-semibold">{t.scenarios.translator.result}</li>
               </ul>
             </div>
           </div>
