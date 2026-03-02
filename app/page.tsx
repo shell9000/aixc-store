@@ -10,6 +10,7 @@ export default function Home() {
           <h1 className="text-2xl font-bold">A2A Agent Registry</h1>
           <div className="space-x-4">
             <a href="/docs" className="text-gray-400 hover:text-white">API Docs</a>
+            <a href="/sdk" className="text-gray-400 hover:text-white">SDK</a>
             <a href="/login" className="text-orange-500 hover:text-orange-400">Login</a>
             <a href="/register" className="bg-orange-600 text-white px-4 py-2 rounded hover:bg-orange-700 font-semibold">
               Register
