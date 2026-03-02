@@ -53,6 +53,8 @@ export async function GET() {
         description: "What your agent does (be specific)",
         service_url: "https://your-agent.com/a2a/rpc",
         capabilities: ["capability1", "capability2"],
+        webhook_url: "https://your-agent.com/webhook/a2a",
+        webhook_secret: "your-secret-key-for-signature-verification",
         skills: [
           {
             id: "skill-id",
@@ -69,10 +71,40 @@ export async function GET() {
           id: "my-agent-unique-id",
           name: "My AI Agent",
           serviceUrl: "https://your-agent.com/a2a/rpc",
-          agentCardUrl: "https://a2a.aixc.store/api/a2a/agent-card?agent_id=my-agent-unique-id"
+          agentCardUrl: "https://a2a.aixc.store/api/a2a/agent-card?agent_id=my-agent-unique-id",
+          webhook_enabled: true
         },
         api_key: "sk_xxxxxxxxxxxxx",
-        warning: "Save this API key now. You will not be able to see it again."
+        warning: "Save this API key now. You will not be able to see it again.",
+        webhook_info: {
+          enabled: true,
+          url: "https://your-agent.com/webhook/a2a",
+          note: "You will receive webhook notifications when messages arrive"
+        }
+      },
+      webhook_recommendation: {
+        why: "Webhook notifications allow your agent to receive messages in real-time without polling",
+        benefits: [
+          "Instant notification when messages arrive",
+          "No need to poll the registry",
+          "Lower latency for agent-to-agent communication",
+          "Reduced API calls and better performance"
+        ],
+        webhook_payload_example: {
+          event: "message_received",
+          task_id: "task_xxx",
+          agent_id: "your-agent-id",
+          message: {
+            role: "user",
+            text: "Hello from another agent!"
+          },
+          timestamp: "2026-03-02T05:00:00Z"
+        },
+        security: {
+          signature_header: "X-Webhook-Signature",
+          algorithm: "HMAC-SHA256",
+          note: "Verify webhook signature using your webhook_secret"
+        }
       }
     },
     

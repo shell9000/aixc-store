@@ -180,39 +180,30 @@ async function handleMessageSend(request: JsonRpcRequest, supabase: any) {
       );
     }
     
-    // Notify agent about new task (only for new tasks from users)
-    if (!message.taskId && message.role === 'user') {
+    // Notify agent about new message via webhook
+    if (message.role === 'user') {
       try {
-        // For V01: Send WhatsApp notification
-        if (task.agent_id) {
-          const { data: agent } = await supabase
-            .from('agents')
-            .select('agent_id, agent_card')
-            .eq('id', task.agent_id)
-            .single();
+        // Import webhook sender
+        const { notifyAgent } = await import('@/lib/webhook-sender');
+        
+        // Get agent info
+        const agentId = task.agent_id;
+        if (agentId) {
+          const messageText = message.parts?.find((p: any) => p.type === 'text')?.text || 'New message';
           
-          if (agent?.agent_id === 'v01-openclaw-vincent') {
-            // Send notification via OpenClaw webhook
-            const webhookUrl = process.env.OPENCLAW_WEBHOOK_URL || 'http://localhost:3000/api/webhook/a2a-task';
-            
-            await fetch(webhookUrl, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                event: 'task_created',
-                task_id: taskId,
-                agent_id: agent.agent_id,
-                message: {
-                  role: message.role,
-                  text: message.parts?.find((p: any) => p.type === 'text')?.text || 'New task',
-                },
-                timestamp: new Date().toISOString(),
-              }),
-            }).catch(err => console.error('Webhook failed:', err));
-          }
+          await notifyAgent(supabase, agentId, {
+            event: message.taskId ? 'message_received' : 'task_created',
+            task_id: taskId,
+            agent_id: agentId,
+            message: {
+              role: message.role,
+              text: messageText,
+            },
+            timestamp: new Date().toISOString(),
+          });
         }
       } catch (err) {
-        console.error('Notification error:', err);
+        console.error('Webhook notification error:', err);
         // Don't fail the request if notification fails
       }
     }

@@ -40,12 +40,20 @@ export async function POST(req: NextRequest) {
     }
     
     const body = await req.json();
-    const { agent_id, agent_name, description, service_url, capabilities, skills } = body;
+    const { agent_id, agent_name, description, service_url, capabilities, skills, webhook_url, webhook_secret } = body;
     
     // Validate required fields
     if (!agent_id || !agent_name || !service_url) {
       return NextResponse.json(
         { error: 'Missing required fields: agent_id, agent_name, service_url' },
+        { status: 400 }
+      );
+    }
+    
+    // Validate webhook_url if provided
+    if (webhook_url && !webhook_url.startsWith('http')) {
+      return NextResponse.json(
+        { error: 'webhook_url must be a valid HTTP/HTTPS URL' },
         { status: 400 }
       );
     }
@@ -129,6 +137,9 @@ export async function POST(req: NextRequest) {
         active: true,
         verified: false,
         registration_ip: ip,
+        webhook_url: webhook_url || null,
+        webhook_secret: webhook_secret || null,
+        webhook_enabled: webhook_url ? true : false,
       })
       .select('id, agent_id, agent_name, created_at')
       .single();
@@ -190,9 +201,18 @@ export async function POST(req: NextRequest) {
         agentCardUrl: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://a2a.aixc.store'}/api/a2a/agent-card?agent_id=${agent.agent_id}`,
         created_at: agent.created_at,
         verified: false,
+        webhook_enabled: webhook_url ? true : false,
       },
       api_key: apiKey,
       warning: 'Save this API key now. You will not be able to see it again.',
+      webhook_info: webhook_url ? {
+        enabled: true,
+        url: webhook_url,
+        note: 'You will receive webhook notifications when messages arrive'
+      } : {
+        enabled: false,
+        note: 'To enable webhook notifications, update your agent with a webhook_url'
+      }
     });
     
   } catch (error: any) {
