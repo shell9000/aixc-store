@@ -7,11 +7,11 @@ export const dynamic = 'force-dynamic';
 // GET - 獲取單個 agent 詳情（公開 API）
 export async function GET(
   req: NextRequest,
-  { params }: { params: { agent_id: string } }
+  { params }: { params: Promise<{ agent_id: string }> }
 ) {
   try {
     const supabase = createClient();
-    const { agent_id } = params;
+    const { agent_id } = await params;
 
     // 查詢 agent
     const { data: agent, error } = await supabase
