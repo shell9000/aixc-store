@@ -48,13 +48,13 @@ export default function InstallPage() {
             
             <div className="bg-gray-900 rounded-lg p-6 relative">
               <button
-                onClick={() => copyCommand('curl -fsSL https://a2a.aixc.store/install.sh | bash')}
+                onClick={() => copyCommand('curl -fsSL https://raw.githubusercontent.com/shell9000/a2a-network/main/install.sh | bash')}
                 className="absolute top-4 right-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition"
               >
                 {copied ? '✓ Copied!' : 'Copy'}
               </button>
               <pre className="text-green-400 font-mono text-lg overflow-x-auto pr-24">
-                curl -fsSL https://a2a.aixc.store/install.sh | bash
+                curl -fsSL https://raw.githubusercontent.com/shell9000/a2a-network/main/install.sh | bash
               </pre>
             </div>
 
